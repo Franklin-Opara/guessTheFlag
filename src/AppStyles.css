@@ -68,6 +68,7 @@
   flex-direction:column;
   gap:22px;
   box-shadow: 0 4px 24px rgba(37,99,235,0.09), 0 1px 4px rgba(0,0,0,0.06);
+  box-sizing: border-box;
 }
 
 .options-row{ display:flex; gap:8px }
@@ -98,3 +99,16 @@
 
 .btn-outline{ padding:15px; border-radius:14px; border:2px solid var(--accent); background:transparent; color:var(--accent); font-weight:700; cursor:pointer }
 .btn-outline:hover{ background:#EFF6FF }
+
+/* Mobile tweaks */
+@media (max-width: 480px) {
+  .home{ padding: 20px 12px; }
+  .home-inner{ padding: 0 6px; }
+  .card{ margin: 8px; padding: 18px; border-radius: 14px }
+  .top-bar{ margin: 8px; padding: 12px; }
+  .top-bar > div{ display:flex; gap:8px; align-items:center; justify-content:space-between; flex-wrap:wrap }
+  .top-bar span{ min-width:0 }
+  .timer-track{ height:6px }
+  .answers-grid{ grid-template-columns:1fr; }
+  .flag-hero{ max-width:320px }
+}
