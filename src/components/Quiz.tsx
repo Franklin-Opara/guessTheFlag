@@ -3,9 +3,9 @@ import { TIMER_SECONDS, flagUrl } from "../lib/game";
 import type { Question, AnswerRecord } from "../lib/game";
 
 // audio files should be placed in public/sounds/
-const correctAudio = typeof Audio !== 'undefined' ? new Audio('/sounds/correct.mp3') : null;
-const wrongAudio = typeof Audio !== 'undefined' ? new Audio('/sounds/wrong.mp3') : null;
-const tickingAudio = typeof Audio !== 'undefined' ? new Audio('/sounds/ticking.mp3') : null;
+const correctAudio = typeof Audio !== "undefined" ? new Audio("/sounds/correct.mp3") : null;
+const wrongAudio = typeof Audio !== "undefined" ? new Audio("/sounds/wrong.mp3") : null;
+const tickingAudio = typeof Audio !== "undefined" ? new Audio("/sounds/ticking.mp3") : null;
 import DotBackground from "./shared/DotBackground";
 
 export default function QuizScreen({ questions, onFinish }: { questions: Question[]; onFinish: (records: AnswerRecord[]) => void }) {
@@ -97,10 +97,10 @@ export default function QuizScreen({ questions, onFinish }: { questions: Questio
   const timerPct = (timeLeft / TIMER_SECONDS) * 100;
 
   function optionBg(name: string) {
-    if (!answered) return { bg: "#fff", border: "#E5E7EB", color: "#111827", shadow: "0 2px 8px rgba(0,0,0,0.07)" };
-    if (name === current.correct.name) return { bg: "#F0FDF4", border: "#16A34A", color: "#15803D", shadow: "0 2px 8px rgba(22,163,74,0.15)" };
-    if (name === chosen) return { bg: "#FEF2F2", border: "#DC2626", color: "#B91C1C", shadow: "0 2px 8px rgba(220,38,38,0.12)" };
-    return { bg: "#fff", border: "#E5E7EB", color: "#9CA3AF", shadow: "none" };
+    if (!answered) return "is-neutral";
+    if (name === current.correct.name) return "is-correct";
+    if (name === chosen) return "is-wrong";
+    return "is-muted";
   }
 
   return (
@@ -108,36 +108,39 @@ export default function QuizScreen({ questions, onFinish }: { questions: Questio
       <DotBackground />
 
       <div className="top-bar">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-          <span style={{ fontSize: 13, fontWeight: 600, color: "#6B7280" }}>
-            Question <span style={{ color: "#111827", fontWeight: 800 }}>{index + 1}</span>
-            <span style={{ color: "#9CA3AF" }}> / {questions.length}</span>
-          </span>
-          <span style={{ fontSize: 13, fontWeight: 600, color: "#6B7280" }}>
-            Score <span style={{ color: "var(--accent)", fontWeight: 800, fontSize: 15 }}>{score}</span>
-          </span>
+        <div className="top-row">
+          <div className="top-left">
+            <span className="meta-line">
+              Question <strong>{index + 1}</strong>
+              <span style={{ color: "var(--muted-soft)" }}> / {questions.length}</span>
+            </span>
+          </div>
+          <div className="top-right">
+            <span className="meta-line">
+              Score <strong className="accent">{score}</strong>
+            </span>
+          </div>
         </div>
 
         <div className="timer-track">
-          <div style={{ height: "100%", width: `${timerPct}%`, borderRadius: "9999px", background: timeLeft <= 3 ? "#DC2626" : "var(--accent)", transition: "width 1s linear, background 0.3s" }} />
+          <div className="timer-fill" style={{ width: `${timerPct}%`, background: timeLeft <= 3 ? "var(--danger)" : "var(--accent)" }} />
         </div>
         <div style={{ textAlign: "right", marginTop: 4 }}>
-          <span style={{ fontSize: 11, fontWeight: 700, fontVariantNumeric: "tabular-nums", color: timeLeft <= 3 ? "#DC2626" : "#9CA3AF" }}>{timeLeft}s</span>
+          <span style={{ fontSize: 11, fontWeight: 800, fontVariantNumeric: "tabular-nums", color: timeLeft <= 3 ? "var(--danger)" : "var(--muted-soft)" }}>{timeLeft}s</span>
         </div>
       </div>
 
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "12px 24px 40px", gap: 24, position: "relative", zIndex: 2 }}>
+      <div className="quiz-stage">
         <div className="flag-hero">
           <div className="flag-frame">
-            <img key={current.correct.code} src={flagUrl(current.correct.code)} alt="Flag to identify" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            <img key={current.correct.code} src={flagUrl(current.correct.code)} alt="Flag to identify" />
           </div>
         </div>
 
         <div className="answers-grid">
           {current.options.map((opt) => {
-            const { bg, border, color, shadow } = optionBg(opt.name);
             return (
-              <button key={opt.code} onClick={() => handleAnswer(opt.name)} disabled={answered} className="answer-btn" style={{ border: `2px solid ${border}`, background: bg, color, boxShadow: shadow, cursor: answered ? "default" : "pointer", opacity: answered && color === "#9CA3AF" ? 0.55 : 1 }}>
+              <button key={opt.code} onClick={() => handleAnswer(opt.name)} disabled={answered} className={`answer-btn ${optionBg(opt.name)}`}>
                 {opt.name}
               </button>
             );

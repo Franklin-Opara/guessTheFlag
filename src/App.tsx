@@ -19,7 +19,7 @@ export default function App() {
   };
 
   return (
-    <div style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
+    <div className="app-root">
       {screen === "home" && <HomeScreen selected={questionCount} onSelect={setQuestionCount} onStart={startGame} />}
       {screen === "quiz" && <QuizScreen questions={questions} onFinish={(r) => { setRecords(r); setScreen("results"); }} />}
       {screen === "results" && <ResultsScreen records={records} total={questions.length} onPlayAgain={startGame} onChangeSettings={() => setScreen("home")} />}
