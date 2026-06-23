@@ -68,9 +68,9 @@ export default function ResultsScreen({ records, total, onPlayAgain, onChangeSet
           </div>
         )}
 
-        <div className="stack">
+        <div className="results-actions">
           <button onClick={onPlayAgain} className="btn btn-primary">Play Again</button>
-          <button onClick={onChangeSettings} className="btn-outline">Change Settings</button>
+          <button onClick={onChangeSettings} className="btn btn-secondary">Change Settings</button>
         </div>
 
         <p className="results-footer">195 sovereign nations · updated 2024</p>

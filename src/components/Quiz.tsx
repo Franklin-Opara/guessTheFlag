@@ -133,7 +133,7 @@ export default function QuizScreen({ questions, onFinish }: { questions: Questio
       <div className="quiz-stage">
         <div className="flag-hero">
           <div className="flag-frame">
-            <img key={current.correct.code} src={flagUrl(current.correct.code)} alt="Flag to identify" />
+            <img className="flag-image" key={current.correct.code} src={flagUrl(current.correct.code)} alt="Flag to identify" />
           </div>
         </div>
 
